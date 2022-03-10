@@ -1,8 +1,10 @@
 package tests;
 
+import io.qameta.allure.Story;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +22,8 @@ public class BookStoreTests {
         RestAssured.baseURI = "https://demoqa.com";
     }
 
+    @Story("API тесты для demoqa.com/bookstore")
+    @DisplayName("Проверка конкретной книги по номеру ISBN")
     @Test
     @Tag("bookstoretest")
     void getAnyBookTest() {
@@ -38,6 +42,8 @@ public class BookStoreTests {
                 .body("author", is("Glenn Block et al."));
     }
 
+    @Story("API тесты для demoqa.com/bookstore")
+    @DisplayName("Проверка полного списка книг")
     @Test
     @Tag("bookstoretest")
     void getBooksTest() {
@@ -64,6 +70,8 @@ public class BookStoreTests {
                 .body("books", hasSize(greaterThan(0)));
     }
 
+    @Story("API тесты для demoqa.com/bookstore")
+    @DisplayName("Проверка генерации токена пользователя")
     @Test
     @Tag("bookstoretest")
     void generateTokenTest() {
@@ -84,6 +92,8 @@ public class BookStoreTests {
                 .body("token.size()", greaterThan(10));
     }
 
+    @Story("API тесты для demoqa.com/bookstore")
+    @DisplayName("Проверка генерации токена пользователя с помощью AllureListener")
     @Test
     @Tag("bookstoretest")
     void generateTokenTestWithAllureListener() {
@@ -105,6 +115,8 @@ public class BookStoreTests {
                 .body("token.size()", greaterThan(10));
     }
 
+    @Story("API тесты для demoqa.com/bookstore")
+    @DisplayName("Проверка генерации токена пользователя с помощью CustomAllureListener")
     @Test
     @Tag("bookstoretest")
     void generateTokenTestWithCustomAllureListener() {
