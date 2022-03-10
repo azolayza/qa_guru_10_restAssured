@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,6 +44,26 @@ public class BookStoreTests {
         String data = "{ \"userName\": \"alex\", " +
                 "\"password\": \"asdsad#frew_DFS2\" }";
         given()
+                .contentType(JSON)
+                .body(data)
+                .log().uri()
+                .log().body()
+                .when()
+                .post("/Account/v1/GenerateToken")
+                .then()
+                .log().status()
+                .log().body()
+                .body("status", is("Success"))
+                .body("result", is("User authorized successfully."))
+                .body("token.size()", greaterThan(10));
+    }
+
+    @Test
+    void generateTokenTestWithAllureListener(){
+        String data = "{ \"userName\": \"alex\", " +
+                "\"password\": \"asdsad#frew_DFS2\" }";
+        given()
+                .filter(new AllureRestAssured())
                 .contentType(JSON)
                 .body(data)
                 .log().uri()
