@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -20,13 +19,34 @@ public class BookStoreTests {
     }
 
     @Test
-    void getBookTest() {
-        //curl -X GET "https://demoqa.com/BookStore/v1/Books" -H "accept: application/json"
-        get("/BookStore/v1/Books")
+    void getAnyBookTest() {
+        given()
+                .filter(withCustomTemplates())
+                .params("ISBN", "9781449337711")//
+                .log().uri()
+                .log().body()
+                .when()
+                .get("/BookStore/v1/Book")
                 .then()
-                .body("books", hasSize(greaterThan(0)));
+                .log().status()
+                .log().body()
+                .statusCode(200)
+                .body("title", is("Designing Evolvable Web APIs with ASP.NET"))
+                .body("author", is("Glenn Block et al."));
     }
 
+    @Test
+    void getBooksTest() {
+        given()
+                .filter(withCustomTemplates())
+                .log().all()
+                .when()
+                .get("/BookStore/v1/Books")
+                .then()
+                .log().all()
+                .body("books", hasSize(greaterThan(0)))
+                .body("books.title[0]", is("Git Pocket Guide"));
+    }
     @Test
     void getBooksWithAllLogsTest() {
         given()
