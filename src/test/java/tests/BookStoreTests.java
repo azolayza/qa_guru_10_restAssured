@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
@@ -14,11 +15,13 @@ import static org.hamcrest.Matchers.*;
 public class BookStoreTests {
 
     @BeforeAll
+    @Tag("bookstoretest")
     static void setup() {
         RestAssured.baseURI = "https://demoqa.com";
     }
 
     @Test
+    @Tag("bookstoretest")
     void getAnyBookTest() {
         given()
                 .filter(withCustomTemplates())
@@ -36,6 +39,7 @@ public class BookStoreTests {
     }
 
     @Test
+    @Tag("bookstoretest")
     void getBooksTest() {
         given()
                 .filter(withCustomTemplates())
@@ -61,6 +65,7 @@ public class BookStoreTests {
     }
 
     @Test
+    @Tag("bookstoretest")
     void generateTokenTest() {
         String data = "{ \"userName\": \"alex\", " +
                 "\"password\": \"asdsad#frew_DFS2\" }";
@@ -80,6 +85,7 @@ public class BookStoreTests {
     }
 
     @Test
+    @Tag("bookstoretest")
     void generateTokenTestWithAllureListener() {
         String data = "{ \"userName\": \"alex\", " +
                 "\"password\": \"asdsad#frew_DFS2\" }";
@@ -100,6 +106,7 @@ public class BookStoreTests {
     }
 
     @Test
+    @Tag("bookstoretest")
     void generateTokenTestWithCustomAllureListener() {
         String data = "{ \"userName\": \"alex\", " +
                 "\"password\": \"asdsad#frew_DFS2\" }";
